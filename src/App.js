@@ -2,22 +2,27 @@ import './App.css';
 import React, { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [todoList,setTodoList] = useState([]);
+  const [value,setValue] = useState("");
   return (
     <div className="App">
-        <div>{count}</div>
-        <div className="button-group">
-          <button onClick={()=> setCount(count+1)}>+</button>
-          <button onClick={()=>{ 
-            if(count-1 < 0){
-              alert('마이너스 !!!');
-              return
-            }
-            setCount(count-1)     
-            }}>-</button>
-          <button onClick={()=> setCount(0) }>Reset</button>
-        </div>
+      <input type='text' onChange={function(e){
+        
+        setValue(e.target.value);
 
+      }}/>
+      <button onClick={function(){
+        
+        setTodoList([...todoList, value])
+
+      }}>추가</button>
+      
+      <div>
+        {todoList.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+      
     </div>
   );
 }
