@@ -34,6 +34,12 @@ function App() {
     );
   }
 
+  function deleteEvent(id){
+    setTodoList(prev=>
+      prev.filter(item => item.id !== id)
+    );
+  }
+
   return (
     <div className="App">
       <input type='text' value={value} onChange={inputEvent} onKeyDown={enterEvent}/>
@@ -44,6 +50,7 @@ function App() {
           <div key={item.id} id={item.id} style={{display: "flex"}}>
             <input type='checkbox' onChange={()=>checkboxEvent(item.id)}/>
             <div style={{textDecoration:item.done ? 'line-through':'none'}}>{item.text}</div>
+            <button onClick={()=>deleteEvent(item.id)}>삭제</button>
           </div>
         ))}
       </div>
