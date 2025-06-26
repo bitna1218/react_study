@@ -16,6 +16,22 @@ function App() {
     setValue("");
   }
 
+  function saveEvent(){
+    localStorage.setItem("todos", JSON.stringify(todoList));
+  }
+
+  function getEvent(){
+    const saved = localStorage.getItem("todos");
+
+    if(saved){
+      const parsed = JSON.parse(saved);
+      setTodoList(parsed)
+
+      const maxId = parsed.reduce((acc,cur) => Math.max(acc, cur.id),0);
+      indexVal.current = maxId + 1;
+    }
+  }
+
   function inputEvent(e){
     setValue(e.target.value);
   }
@@ -44,6 +60,8 @@ function App() {
     <div className="App">
       <input type='text' value={value} onChange={inputEvent} onKeyDown={enterEvent}/>
       <button onClick={addEvent}>추가</button>
+      <button onClick={saveEvent}>할일저장</button>
+      <button onClick={getEvent}>불러오기</button>
       
       <div>
         {todoList.map((item) => (
