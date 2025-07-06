@@ -35,10 +35,30 @@ function Clock(){
 
 
 function FlipUnit({ number, label }) {
+
+  const [prevNumber, setPrevNumber] = useState(number);
+  const [flipping, setFlipping] = useState(false);
+
+  useEffect(()=>{
+
+    if(number !== prevNumber){
+      setFlipping(true);
+
+      const timeout = setTimeout(()=>{
+        setFlipping(false);
+        setPrevNumber(number);
+      },1000);
+
+      return () => clearTimeout(timeout);
+
+    }
+
+  },[number, prevNumber]);
+
   return (
     <div className="flex flex-col items-center">
       <div className="relative w-20 h-28 bg-gray-800 rounded-xl overflow-hidden shadow-xl">
-        <div className="absolute inset-0 flex items-center justify-center text-5xl transition-all duration-300 animate-cardFlipDown">
+        <div className={`absolute inset-0 flex items-center justify-center text-5xl transition-all duration-300 ${flipping ? 'animate-cardFlipDown' : ''}`} >
           {number}
         </div>
       </div>
